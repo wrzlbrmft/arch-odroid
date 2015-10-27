@@ -117,10 +117,7 @@ doCreateNewPartitionTable() {
 }
 
 doCreateNewPartitions() {
-	local START="1"; local END="$BOOT_SIZE"
-	parted -s -a optimal "$INSTALL_DEVICE" mkpart primary linux-swap "${START}MiB" "${END}MiB"
-
-	START="$END"; END="100%"
+	local START="1"; local END="100%"
 	parted -s -a optimal "$INSTALL_DEVICE" mkpart primary linux-swap "${START}MiB" "${END}MiB"
 
 	parted -s -a optimal "$INSTALL_DEVICE" toggle 1 boot
@@ -132,10 +129,6 @@ doCreateNewPartitions() {
 doSetNewPartitionTypes() {
 	fdisk "$INSTALL_DEVICE" << __END__
 t
-1
-$BOOT_PARTITION_TYPE
-t
-2
 $ROOT_PARTITION_TYPE
 w
 __END__
@@ -147,16 +140,11 @@ __END__
 doDetectDevices() {
 	local ALL_PARTITIONS=($( getAllPartitions ))
 
-	BOOT_DEVICE="$INSTALL_DEVICE_HOME/${ALL_PARTITIONS[0]}"
 	ROOT_DEVICE="$INSTALL_DEVICE_HOME/${ALL_PARTITIONS[1]}"
 }
 
 doMkfs() {
 	case "$1" in
-		fat32)
-			mkfs -t fat -F 32 -n "$2" "$3"
-			;;
-
 		*)
 			mkfs -t "$1" -L "$2" "$3"
 			;;
@@ -164,15 +152,12 @@ doMkfs() {
 }
 
 doFormat() {
-	doMkfs "$BOOT_FILESYSTEM" "$BOOT_LABEL" "$BOOT_DEVICE"
 	doMkfs "$ROOT_FILESYSTEM" "$ROOT_LABEL" "$ROOT_DEVICE"
 }
 
 doMount() {
 	mkdir -p root
 	mount "$ROOT_DEVICE" root
-	mkdir -p boot
-	mount "$BOOT_DEVICE" boot
 }
 
 doDownloadArchLinux() {
@@ -189,10 +174,10 @@ doUnpackArchLinux() {
 	doFlush
 }
 
-doMoveBoot() {
-	mv root/boot/* boot
-
-	doFlush
+doFlashBootloader() {
+	cd root/boot
+	sh sd_fusing.sh "$INSTALL_DEVICE"
+	cd ../..
 }
 
 doSetHostname() {
@@ -256,9 +241,6 @@ __END__
 }
 
 doUnmount() {
-	umount boot
-	rmdir boot
-
 	umount root
 	rmdir root
 }
@@ -284,7 +266,7 @@ doMount
 
 doDownloadArchLinux
 doUnpackArchLinux
-doMoveBoot
+doFlashBootloader
 
 doSetHostname "$HOSTNAME"
 doSetTimezone "$TIMEZONE"
