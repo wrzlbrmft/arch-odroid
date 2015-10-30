@@ -140,7 +140,7 @@ __END__
 doDetectDevices() {
 	local ALL_PARTITIONS=($( getAllPartitions ))
 
-	ROOT_DEVICE="$INSTALL_DEVICE_HOME/${ALL_PARTITIONS[1]}"
+	ROOT_DEVICE="$INSTALL_DEVICE_HOME/${ALL_PARTITIONS[0]}"
 }
 
 doMkfs() {
