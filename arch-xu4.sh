@@ -95,16 +95,6 @@ doPartProbe() {
 	partprobe "$INSTALL_DEVICE"
 }
 
-doDeleteAllPartitions() {
-	fdisk "$INSTALL_DEVICE" << __END__
-o
-w
-__END__
-
-	doFlush
-	doPartProbe
-}
-
 doWipeDevice() {
 	dd if=/dev/zero of="$INSTALL_DEVICE" bs=1M count=1
 
@@ -118,20 +108,9 @@ doCreateNewPartitionTable() {
 
 doCreateNewPartitions() {
 	local START="1"; local END="100%"
-	parted -s -a optimal "$INSTALL_DEVICE" mkpart primary linux-swap "${START}MiB" "${END}MiB"
+	parted -s -a optimal "$INSTALL_DEVICE" mkpart primary "${START}MiB" "${END}MiB"
 
 	parted -s -a optimal "$INSTALL_DEVICE" toggle 1 boot
-
-	doFlush
-	doPartProbe
-}
-
-doSetNewPartitionTypes() {
-	fdisk "$INSTALL_DEVICE" << __END__
-t
-$ROOT_PARTITION_TYPE
-w
-__END__
 
 	doFlush
 	doPartProbe
@@ -252,13 +231,11 @@ doUnmount() {
 doConfirmInstall
 
 doWipeAllPartitions
-doDeleteAllPartitions
 doWipeDevice
 
 doCreateNewPartitionTable "$PARTITION_TABLE_TYPE"
 
 doCreateNewPartitions
-doSetNewPartitionTypes
 doDetectDevices
 
 doFormat
