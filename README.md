@@ -3,17 +3,21 @@ A simple script installing [Arch Linux](https://www.archlinux.org/) on an SD
 card for the
 [ODROID-XU4](http://www.hardkernel.com/main/products/prdt_info.php).
 
-The installation procedure pretty much matches the
-[Arch Linux ARM Installation Guide](http://archlinuxarm.org/platforms/armv7/samsung/odroid-xu4),
+The installation procedure pretty much matches the Installation Guides from
+[Arch Linux ARM](http://archlinuxarm.org/),
 but also adds some configuration settings like networking, including a static IP
-address for a fully screen-less setup.
+address for a fully headless setup without a screen or keyboard.
+
+After the installation you can directly login to your
+ODROID-XU4
+using the pre-configured IP address.
 
 ## Requirements
 
 In order to use
 `arch-xu4`,
-you need a Linux environment (Mac support is on its way...) which is online and
-an SD card slot.
+you need an extra Linux environment (Mac support not quite there...) which is
+connected to the Internet and has an SD card slot.
 
 For the Linux environment, you can also use a Live-CD like
 [Xubuntu](http://xubuntu.org/). Just make sure the following commands are
