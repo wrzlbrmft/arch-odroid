@@ -4,8 +4,12 @@ INSTALL_HOME=$( cd "`dirname "${BASH_SOURCE[0]}"`" && pwd )
 INSTALL_SCRIPT="`basename "${BASH_SOURCE[0]}"`"
 INSTALL_NAME="`printf "$INSTALL_SCRIPT" | awk -F '.' '{ print $1 }'`"
 
+doPrintPrompt() {
+	printf "[$INSTALL_NAME] $*"
+}
+
 doPrint() {
-	printf "[$INSTALL_NAME] $*\n"
+	doPrintPrompt "$*\n"
 }
 
 doPrintHelpMessage() {
@@ -59,7 +63,9 @@ fi
 
 doConfirmInstall() {
 	doPrint "Installing to '$INSTALL_DEVICE' - ALL DATA ON IT WILL BE LOST!"
-	doPrint "Enter 'YES' (in capitals) to confirm:"
+	doPrint "Enter 'YES' (in capitals) to confirm and start the installation."
+
+	doPrintPrompt "> "
 	read i
 	if [ "$i" != "YES" ]; then
 		doPrint "Aborted."
