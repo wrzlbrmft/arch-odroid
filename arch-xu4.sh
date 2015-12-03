@@ -130,6 +130,10 @@ doDetectDevices() {
 
 doMkfs() {
 	case "$1" in
+		fat32)
+			mkfs -t fat -F 32 -n "$2" "$3"
+			;;
+
 		*)
 			mkfs -t "$1" -L "$2" "$3"
 			;;
@@ -176,9 +180,9 @@ doSetTimezone() {
 }
 
 doSetNetwork() {
-	cat > root/etc/systemd/network/eth0.network << __END__
+	cat > "root/etc/systemd/network/$NETWORK_INTERFACE.network" << __END__
 [Match]
-Name=eth0
+Name=$NETWORK_INTERFACE
 
 [Network]
 DNS=$NETWORK_DNS
