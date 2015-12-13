@@ -231,6 +231,12 @@ vm.swappiness=$OPTIMIZE_SWAPPINESS_VALUE
 __END__
 }
 
+doDownloadPackageSets() {
+	for i in $DOWNLOAD_PACKAGE_SETS; do
+		echo "$i"
+	done
+}
+
 doUnmount() {
 	umount root
 	rmdir root
@@ -272,6 +278,8 @@ doSetTimezone "$TIMEZONE"
 [ "$SYMLINK_HASH_COMMANDS" == "yes" ] && doSymlinkHashCommands
 
 [ "$OPTIMIZE_SWAPPINESS" == "yes" ] && doOptimizeSwappiness
+
+doDownloadPackageSets
 
 doUnmount
 
