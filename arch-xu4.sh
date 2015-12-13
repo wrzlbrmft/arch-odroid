@@ -163,10 +163,12 @@ doUnpackArchLinux() {
 	doFlush
 }
 
-doFlashBootloader() {
+doFinalizeBoot() {
 	cd root/boot
 	sh sd_fusing.sh "$INSTALL_DEVICE"
 	cd ../..
+
+	doFlush
 }
 
 doSetHostname() {
@@ -253,7 +255,8 @@ doMount
 
 doDownloadArchLinux
 doUnpackArchLinux
-doFlashBootloader
+
+doFinalizeBoot
 
 doSetHostname "$HOSTNAME"
 doSetTimezone "$TIMEZONE"
