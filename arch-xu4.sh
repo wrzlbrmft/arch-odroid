@@ -251,7 +251,7 @@ doDownloadPackageSets() {
 }
 
 doUnmount() {
-	umount root
+	umount "$ROOT_DEVICE"
 	rmdir root
 }
 
