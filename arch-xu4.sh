@@ -178,6 +178,13 @@ doSetTimezone() {
 	ln -sf "/usr/share/zoneinfo/$1" root/etc/localtime
 }
 
+doSetConsole() {
+	cat > root/etc/vconsole.conf << __END__
+KEYMAP=$1
+FONT=$2
+__END__
+}
+
 doSetNetwork() {
 	cat > "root/etc/systemd/network/$NETWORK_INTERFACE.network" << __END__
 [Match]
@@ -279,6 +286,8 @@ doFinalizeBoot
 
 doSetHostname "$HOSTNAME"
 doSetTimezone "$TIMEZONE"
+
+doSetConsole "$CONSOLE_KEYMAP" "$CONSOLE_FONT"
 
 [ "$SET_NETWORK" == "yes" ] && doSetNetwork
 
