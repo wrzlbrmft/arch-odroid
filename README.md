@@ -12,6 +12,11 @@ After the installation you can directly login to your
 ODROID-XU4
 using the pre-configured IP address.
 
+**NOTE:** Setting up wireless networking requires at least connecting a keyboard
+to your
+ODROID-XU4
+-- but just once! ;-)
+
 ## Requirements
 
 In order to use
@@ -115,7 +120,13 @@ pacman -U /root/software/aaa.dist/*.tar.xz
 `DOWNLOAD_PACKAGE_SETS_PATH` setting.
 
 The installation is configured to automatically connect to the given wireless
-network. Simply reboot and you are online.
+network, therefore type in:
+
+```
+reboot
+```
+
+After a few seconds you are back and online.
 
 ### Using an Alternative Configuration File
 
