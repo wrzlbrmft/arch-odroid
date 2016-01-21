@@ -78,6 +78,14 @@ doConfirmInstall() {
 	done
 }
 
+doDownloadArchLinux() {
+	if [ ! -f "`basename "$ARCH_LINUX_DOWNLOAD"`" ] || [ "$ARCH_LINUX_DOWNLOAD_FORCE" == "yes" ]; then
+		rm -f "`basename "$ARCH_LINUX_DOWNLOAD"`"
+		curl --retry 999 --retry-delay 0 --retry-max-time 300 --speed-time 10 --speed-limit 0 \
+			-LO "$ARCH_LINUX_DOWNLOAD"
+	fi
+}
+
 getAllPartitions() {
 	lsblk -l -n -o NAME "$INSTALL_DEVICE" | grep -v "^$INSTALL_DEVICE_NAME$"
 }
@@ -147,14 +155,6 @@ doFormat() {
 doMount() {
 	mkdir -p root
 	mount "$ROOT_DEVICE" root
-}
-
-doDownloadArchLinux() {
-	if [ ! -f "`basename "$ARCH_LINUX_DOWNLOAD"`" ] || [ "$ARCH_LINUX_DOWNLOAD_FORCE" == "yes" ]; then
-		rm -f "`basename "$ARCH_LINUX_DOWNLOAD"`"
-		curl --retry 999 --retry-delay 0 --retry-max-time 300 --speed-time 10 --speed-limit 0 \
-			-LO "$ARCH_LINUX_DOWNLOAD"
-	fi
 }
 
 doUnpackArchLinux() {
@@ -323,6 +323,8 @@ doUnmount() {
 
 doConfirmInstall
 
+doDownloadArchLinux
+
 doWipeAllPartitions
 doWipeDevice
 
@@ -334,7 +336,6 @@ doDetectDevices
 doFormat
 doMount
 
-doDownloadArchLinux
 doUnpackArchLinux
 
 doFinalizeBoot
