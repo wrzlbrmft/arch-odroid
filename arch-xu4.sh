@@ -86,7 +86,7 @@ doDownloadArchLinux() {
 	fi
 }
 
-getAllPartitions() {
+doGetAllPartitions() {
 	lsblk -l -n -o NAME "$INSTALL_DEVICE" | grep -v "^$INSTALL_DEVICE_NAME$"
 }
 
@@ -97,7 +97,7 @@ doFlush() {
 }
 
 doWipeAllPartitions() {
-	for i in $( getAllPartitions | sort -r ); do
+	for i in $( doGetAllPartitions | sort -r ); do
 		umount "$INSTALL_DEVICE_HOME/$i"
 		dd if=/dev/zero of="$INSTALL_DEVICE_HOME/$i" bs=1M count=1
 	done
@@ -131,7 +131,7 @@ doCreateNewPartitions() {
 }
 
 doDetectDevices() {
-	local ALL_PARTITIONS=($( getAllPartitions ))
+	local ALL_PARTITIONS=($( doGetAllPartitions ))
 
 	ROOT_DEVICE="$INSTALL_DEVICE_HOME/${ALL_PARTITIONS[0]}"
 }
