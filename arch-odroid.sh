@@ -61,6 +61,39 @@ source "$SCRIPT_CONF"
 #    F U N C T I O N S
 # =================================================================================
 
+doSelectHardwareModel() {
+	local i=0
+
+	if [ -z "$HARDWARE_MODEL_SELECT" ]; then
+		doPrint "Select hardware model"
+
+		local j=1
+		while [ "$i" -lt "${#HARDWARE_MODEL[@]}" ]; do
+			doPrint "$j = ${HARDWARE_MODEL[$i]}"
+			let i=i+3
+			let j=j+1
+		done
+
+		doPrintPrompt "> "
+		read i
+		if [[ ! $i =~ ^[0-9]+$ ]] || [ ! "$i" -gt "0" ] || [ ! "$i" -lt "$j" ]; then
+			printf "ERROR: Invalid selection ('$i')\n"
+			exit 1
+		else
+			HARDWARE_MODEL_SELECT="$i"
+		fi
+	fi
+
+	let i=$HARDWARE_MODEL_SELECT*3-3
+	doPrint "Installing for ${HARDWARE_MODEL[$i]}"
+
+	let i=i+1
+	ARCH_LINUX_DOWNLOAD_URL="${HARDWARE_MODEL[$i]}"
+
+	let i=i+1
+	ARCH_LINUX_PACKAGES_URL="${HARDWARE_MODEL[$i]}"
+}
+
 doConfirmInstall() {
 	doPrint "Installing to '$INSTALL_DEVICE' - ALL DATA ON IT WILL BE LOST!"
 	doPrint "Enter 'YES' (in capitals) to confirm and start the installation."
@@ -378,6 +411,8 @@ doUnmount() {
 # =================================================================================
 #    M A I N
 # =================================================================================
+
+doSelectHardwareModel
 
 doConfirmInstall
 
