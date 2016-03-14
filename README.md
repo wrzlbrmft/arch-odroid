@@ -1,7 +1,7 @@
-# arch-xu4
+# arch-odroid
 A simple script installing [Arch Linux](https://www.archlinux.org/) on an SD
 card for the
-[ODROID-XU4](http://www.hardkernel.com/main/products/prdt_info.php).
+[ODROID](http://www.hardkernel.com/main/main.php).
 
 The installation procedure pretty much matches the Installation Guides from
 [Arch Linux ARM](http://archlinuxarm.org/),
@@ -9,18 +9,18 @@ but also adds some configuration settings like networking, including a static IP
 address for a fully headless setup without a screen or keyboard.
 
 After the installation you can directly login to your
-ODROID-XU4
+ODROID
 using the pre-configured IP address.
 
 **NOTE:** Setting up wireless networking requires at least connecting a keyboard
 to your
-ODROID-XU4
+ODROID
 -- but just once! ;-)
 
 ## Requirements
 
 In order to use
-`arch-xu4`,
+`arch-odroid`,
 you need an extra Linux environment (Mac support not quite there...) which is
 connected to the Internet and has an SD card slot.
 
@@ -37,10 +37,10 @@ available:
 ## Usage Guide
 
 In a Terminal download and unpack the latest version of
-`arch-xu4`:
+`arch-odroid`:
 
 ```
-curl -L https://github.com/wrzlbrmft/arch-xu4/archive/master.tar.gz | tar zxvf -
+curl -L https://github.com/wrzlbrmft/arch-odroid/archive/master.tar.gz | tar zxvf -
 ```
 
 Insert the SD card on which you want to install Arch Linux, but make sure none
@@ -49,7 +49,7 @@ determine the device name of the SD card, e.g. `/dev/mmcblk0`, and open the
 configuration file:
 
 ```
-vi arch-xu4-master/arch-xu4.conf
+vi arch-odroid-master/arch-odroid.conf
 ```
 
 Make sure the `INSTALL_DEVICE` setting matches the device name of your SD card.
@@ -65,12 +65,12 @@ You may also want to change the following settings:
 Once you are done, save and close the configuration file.
 
 To write and format partitions on the SD card,
-`arch-xu4`
+`arch-odroid`
 needs super-user privileges. So `su` to `root` or use `sudo` to start the
 installation process:
 
 ```
-sudo arch-xu4-master/arch-xu4.sh
+sudo arch-odroid-master/arch-odroid.sh
 ```
 
 **CAUTION:** The installation will delete *all* existing data on the SD card.
@@ -78,11 +78,11 @@ sudo arch-xu4-master/arch-xu4.sh
 The installation is done, once you see
 
 ```
-[arch-xu4] Wake up, Neo... The installation is done!
+[arch-odroid] Wake up, Neo... The installation is done!
 ```
 
 Then insert the SD card into your
-ODROID-XU4
+ODROID
 and start it up.
 
 That's it!
@@ -103,13 +103,13 @@ required for wireless networking out of the box, namely:
 * `wpa_supplicant`
 
 However, during the installation process
-`arch-xu4`
+`arch-odroid`
 downloads these packages to the SD card. While the configuration is already done
 according to the `SET_WIRELESS` and `WIRELESS_*` settings, you just have to
 install the packages to get wireless networking up and running.
 
 After booting your
-ODROID-XU4
+ODROID
 from the SD card, login as `root` (password is `root`) and type in:
 
 ```
@@ -125,7 +125,7 @@ network. After the reboot you should be online.
 ### Installing Yaourt
 
 By default,
-`arch-xu4`
+`arch-odroid`
 also downloads the packages required for installing
 [Yaourt](https://github.com/archlinuxfr/yaourt), unless you changed the
 `DOWNLOAD_YAOURT` setting. Yaourt in turn allows you to install packages from
@@ -200,7 +200,7 @@ You can use an alternative configuration file by passing it to the installation
 script:
 
 ```
-arch-xu4-master/arch-xu4.sh -c my.conf
+arch-odroid-master/arch-odroid.sh -c my.conf
 ```
 
 ## License
