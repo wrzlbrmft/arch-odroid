@@ -1,7 +1,13 @@
 # arch-odroid
 A simple script installing [Arch Linux](https://www.archlinux.org/) on an SD
 card for the
-[ODROID](http://www.hardkernel.com/main/main.php).
+[ODROID](http://www.hardkernel.com/main/products/prdt_info.php).
+
+The script supports the following hardware models of the
+ODROID:
+
+* ODROID-XU3/XU4 (ARMv7)
+* ODROID-C2 (ARMv8)
 
 The installation procedure pretty much matches the Installation Guides from
 [Arch Linux ARM](http://archlinuxarm.org/),
