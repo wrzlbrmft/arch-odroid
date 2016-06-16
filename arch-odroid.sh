@@ -229,7 +229,7 @@ DHCP=yes
 __END__
 
 	if [ "$DISABLE_IPV6" == "yes" ]; then
-		cat > "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
+		cat >> "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
 IPv6AcceptRouterAdvertisements=0
 __END__
 	fi
@@ -245,12 +245,12 @@ DNS=$ETHERNET_DNS
 __END__
 
 	if [ "$DISABLE_IPV6" == "yes" ]; then
-		cat > "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
+		cat >> "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
 IPv6AcceptRouterAdvertisements=0
 __END__
 	fi
 
-	cat > "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
+	cat >> "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
 
 [Address]
 Address=$ETHERNET_ADDRESS
