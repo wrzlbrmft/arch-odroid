@@ -98,8 +98,8 @@ The default root password is `root`.
 
 ### Wireless Networking
 
-Unfortunately, the Arch Linux ARM distribution does not contain all packages
-required for wireless networking out of the box, namely:
+Unfortunately, the Arch Linux ARM distribution for ODROID does not contain all
+packages required for wireless networking out of the box, namely:
 
 * `crda`
 * `dialog`
@@ -127,6 +127,19 @@ pacman -U --noconfirm /root/software/aaa.dist/*.tar.xz && reboot
 
 The installation is configured to automatically connect to the given wireless
 network. After the reboot you should be online.
+
+### Initialize Pacman
+
+Before you can install additional packages, you must initialize the pacman
+keyring and populate the Arch Linux ARM package signing keys.
+
+Login as `root` and type in:
+
+```
+pacman-key --init && pacman-key --populate archlinuxarm
+```
+
+That's it!
 
 ### Installing Yay or Yaourt
 
