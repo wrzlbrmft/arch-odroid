@@ -261,6 +261,15 @@ Name=$ETHERNET_INTERFACE
 
 [Network]
 DNS=$ETHERNET_DNS
+__END__
+
+    if [ "$DISABLE_IPV6" == "yes" ]; then
+        cat >> "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
+IPv6AcceptRouterAdvertisements=false
+__END__
+    fi
+
+    cat >> "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
 
 [Address]
 Address=$ETHERNET_ADDRESS
@@ -293,6 +302,15 @@ Name=$WIRELESS_INTERFACE
 
 [Network]
 DNS=$WIRELESS_DNS
+__END__
+
+    if [ "$DISABLE_IPV6" == "yes" ]; then
+        cat >> "root/etc/systemd/network/$WIRELESS_INTERFACE.network" << __END__
+IPv6AcceptRouterAdvertisements=false
+__END__
+    fi
+
+    cat >> "root/etc/systemd/network/$WIRELESS_INTERFACE.network" << __END__
 
 [Address]
 Address=$WIRELESS_ADDRESS
