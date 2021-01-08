@@ -234,9 +234,12 @@ FONT=$2
 __END__
 }
 
-doSetEthernetDhcp() {
+doClearNetwork() {
+    rm -f "root/etc/systemd/network/en*.network"
     rm -f "root/etc/systemd/network/eth*.network"
+}
 
+doSetEthernetDhcp() {
     cat > "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
 [Match]
 Name=$ETHERNET_INTERFACE
@@ -253,8 +256,6 @@ __END__
 }
 
 doSetEthernetStatic() {
-    rm -f "root/etc/systemd/network/eth*.network"
-
     cat > "root/etc/systemd/network/$ETHERNET_INTERFACE.network" << __END__
 [Match]
 Name=$ETHERNET_INTERFACE
@@ -544,6 +545,8 @@ doSetHostname "$HOSTNAME"
 doSetTimezone "$TIMEZONE"
 
 doSetConsole "$CONSOLE_KEYMAP" "$CONSOLE_FONT"
+
+doClearNetwork
 
 if [ "$SET_ETHERNET" == "yes" ]; then
     if [ "$ETHERNET_DHCP" == "no" ]; then
